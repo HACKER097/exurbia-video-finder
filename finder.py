@@ -8,7 +8,7 @@ platform = platform.system()
 if platform == "Linux":
 	os.system('ls >> names.txt')
 elif platform == "Windows":
-	os.system('dir > names.txt')
+	os.system('dir /b *.vtt > names.txt')
 elif platform == "Darwin":
 	os.system('ls >> names.txt')
 #Putting filenames in a text file for each OS
@@ -26,7 +26,7 @@ for i in range(len(menu)):
 
 for i in range(len(filenames)):
 
-	with open(filenames[i],'r') as file: 
+	with open(filenames[i],'r',encoding="utf-8") as file: 
 		
 		for line in file: 
 
@@ -38,4 +38,6 @@ for i in range(len(filenames)):
 
 for element in set(printed):
 	print(element)
+if len(printed) == 0:
+	print("Nothing found")
 
