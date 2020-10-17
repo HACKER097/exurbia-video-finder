@@ -1,6 +1,15 @@
 import os
+import platform
 
-os.system('ls ~/subs >> names.txt')
+platform = platform.system()
+
+if platform == "Linux":
+	os.system('ls >> names.txt')
+elif platform == "Window":
+	os.system('dir > names.txt')
+elif platform == "Darwin":
+	os.system('ls >> names.txt')
+
 names = open("names.txt", 'r+')
 menu = names.readlines(1000000)
 names.truncate(0)
@@ -22,5 +31,7 @@ for i in range(len(filenames)):
 				for x in range(len(findwhat)):
 
 					if word == findwhat[x]:
-						print(filenames[i])
+						printed.append(filenames[i])
+for element in set(printed):
+	print(element)
 
