@@ -33,7 +33,7 @@ for i in range(len(filenames)):
 			for word in line.split():
 				for x in range(len(findwhat)):
 
-					if word.lower() == findwhat[x]:
+					if word.lower() == findwhat[x].lower():
 						printed.append(filenames[i])
 
 for element in set(printed):
