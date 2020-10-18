@@ -77,4 +77,4 @@ def vid_search(junk, search_term):
 
 ######## START EVERYTHING ########    
 if __name__ == '__main__':
-	app.run_server(debug=True, use_reloader=True,  dev_tools_hot_reload=True)
+	app.run_server()
