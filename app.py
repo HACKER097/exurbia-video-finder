@@ -35,7 +35,7 @@ app.layout = html.Div([
 
 ### HELPERS ###
 def urlify(s):
-    s = 'https://www.youtu.be/' + s
+    s = 'https://www.youtube.com/watch?v=' + s
     return '[%s](%s)' % (s,s)
 
 ### CALLBACKS ###
