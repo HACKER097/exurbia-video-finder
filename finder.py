@@ -77,7 +77,7 @@ while True:
 						print()
 						print("youtube link : https://youtube.com/watch?v=" + link + "&t=" + str(time) + "s")
 					except IndexError:
-						print("***WORKING ON A FIX***")
+						print("***WORKING ON A FIX FOR LINK***")
 
 					print()
 					print("######################################")
