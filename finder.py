@@ -27,7 +27,7 @@ def strContainsAllWords(str, words):
 	wordCount = 0
 	for s in str.rsplit(" "):
 		for word in words:
-			if s.lower() == word:
+			if s.lower().replace(","," ") == word:
 				wordCount = wordCount + 1
 	return wordCount == len(words)
 
@@ -72,7 +72,13 @@ while True:
 				for line in lines:
 					print(line)
 					line = line[:12].split(":")
-					time = round(int(line[2])*60 + float(line[3]))
+					print(line)
+					try:
+						time = round(int(line[2])*60 + float(line[3]))
+					except IndexError:
+						print("WORKING ON A FIX")
+
+					print()
 					print("youtube link : https://youtube.com/watch?v=" + link + "&t=" + str(time) + "s")
 					print()
 					print("######################################")
