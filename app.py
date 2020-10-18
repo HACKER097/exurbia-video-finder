@@ -3,10 +3,9 @@ import dash_table
 import dash_core_components as dcc
 import dash_html_components as html
 
-from finder import meta
 from dash.exceptions import PreventUpdate
 from dash.dependencies import Output, Input, State
-from finder import search
+from finder import meta, search
 from load_files import clean_text
 
 app = dash.Dash(
@@ -19,7 +18,7 @@ app.layout = html.Div([
     html.H1('Hey, in which video did Exurb1a say ____?'),
     html.Div(
         [
-            dcc.Input(id='searchbar', type='text', value='Wizard Jizz'),
+            dcc.Input(id='searchbar', type='text', value='Wizard Jizz', debounce=True),
             html.Button('Search', id='searchbutton')
         ]
     ), 
@@ -27,7 +26,7 @@ app.layout = html.Div([
     dash_table.DataTable(
         id='search_results',
         columns=[
-            {'name': 'Title', 'id': 'title'},
+            {'name': 'Title', 'id': 'title', 'presentation': 'markdown'},
             {'name': 'URL', 'id': 'url', 'presentation': 'markdown'},
         ],
         data=[]
@@ -43,10 +42,11 @@ def urlify(s):
 @app.callback(
     [Output('search_results', 'data'),
      Output('exact', 'children')],
-    [Input('searchbutton', 'n_clicks')],
+    [Input('searchbutton', 'n_clicks'),
+     Input('searchbar', 'value')],
     [State('searchbar', 'value')]
 )
-def vid_search(junk, search_term):
+def vid_search(junk, junk2, search_term):
     if search_term == None:
         raise PreventUpdate
 
