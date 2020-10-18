@@ -4,13 +4,36 @@ FUZZINESS = 0.5 # Toggle percent of words that must match to be returned
 POTENTIALS = 10 # How many non-exact matches to show if search fails
 
 meta = lf.load_db()
-print("Press q to cancel")
-search_text = None
 
-while search_text != 'q':
+def prompt():
 	findwhat = input("\n\nWHAT LINE ARE U LOOKING FOR: ")
-	search_text = lf.clean_text(findwhat)
+	return lf.clean_text(findwhat)
+
+def display(search_result, meta):
+	if len(search_result['exact']):
+		for t in search_result['exact']:
+			m = meta[t]
+			print('"%s" is said in %s\nhttps://youtube.com/%s' % (search_text, m['title'], t))
+
+		return 
+
+	if len(search_result['potential']):
+		print("I didn't find an exact match, but these are pretty close:")
+
+		p = search_result['potential']
+		for i in range(len(p)):
+			m = meta[p[i][1]]
+			t = p[i][1]
+			print("[%d]\t%s,  https://youtube.com/%s" % (i, m['title'], t))
+
+		return 
+
+	print("Sorry, couldn't find a video where he said anything like that")
+
+
+def search(search_text):
 	keywords = search_text.split(' ')
+	ret = {'exact': [], 'potential': []} 
 
 	# First check potential matches; matches that share at least 
 	# FUZZINESS% of the words with the search (a lot less expensive 
@@ -31,18 +54,21 @@ while search_text != 'q':
 		m = meta[t]
 
 		if search_text in m['script']:
-			print('"%s" is said in %s\nhttps://youtube.com/%s' % (search_text, m['title'], t))
+			ret['exact'].append(t)
 			exact_found = True
 
 	if not exact_found:
-		if len(potential_matches) == 0:
-			print("Sorry, couldn't find a video where he said anything like that")
-			continue 
-
 		potential_matches = potential_matches[:POTENTIALS]
-		print("I didn't find an exact match, but these are pretty close:")
+		ret['potential'] = potential_matches
 	
-		for i in range(len(potential_matches)):
-			m = meta[potential_matches[i][1]]
-			t = potential_matches[i][1]
-			print("[%d]\t%s,  https://youtube.com/%s" % (i, m['title'], t))
+	return ret 
+
+if __name__ == '__main__':
+	print("Press q to cancel")
+
+	search_text = prompt()
+	while search_text != 'q':
+		r = search(search_text)
+		display(r, meta)
+		search_text = prompt()
+	
