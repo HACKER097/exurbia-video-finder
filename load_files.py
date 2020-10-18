@@ -2,6 +2,13 @@ import os
 import re 
 import pickle
 import string 
+import nltk 
+
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+
+LEMMATIZER = WordNetLemmatizer()
+STOPWORDS = set(stopwords.words('english'))
 
 NUMBERS = '0123456789'
 no_punc = re.compile('[%s]' % re.escape(string.punctuation))
@@ -9,6 +16,11 @@ no_punc = re.compile('[%s]' % re.escape(string.punctuation))
 def clean_text(s):
     s = s.lower()
     s = no_punc.sub('', s)
+    t = nltk.word_tokenize(s)
+    t = [LEMMATIZER.lemmatize(w) for w in t]
+    t = [w for w in t if w not in STOPWORDS]
+    s = ' '.join(t)
+
     return s
 
 

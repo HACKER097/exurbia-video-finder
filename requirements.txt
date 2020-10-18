@@ -1,0 +1,9 @@
+dash==1.16.3
+dash-core-components==1.12.1
+dash-html-components==1.1.1
+dash-renderer==1.8.2
+dash-table==4.10.1
+Flask==1.1.2
+Flask-Compress==1.7.0
+nltk==3.4
+Werkzeug==0.15.2
