@@ -1,43 +1,48 @@
-import os
-import platform
-#importing stuff
+import load_files as lf 
 
-platform = platform.system()
-#identifying the OS 
+FUZZINESS = 0.5 # Toggle percent of words that must match to be returned 
+POTENTIALS = 10 # How many non-exact matches to show if search fails
 
-if platform == "Linux":
-	os.system('ls >> names.txt')
-elif platform == "Windows":
-	os.system('dir /b *.vtt > names.txt')
-elif platform == "Darwin":
-	os.system('ls >> names.txt')
-#Putting filenames in a text file for each OS
+meta = lf.load_db()
+print("Press q to cancel")
+search_text = None
 
-names = open("names.txt", 'r+')
-menu = names.readlines(1000000)
-names.truncate(0)
-filenames = []
-printed = []
-findwhat = input("WHAT WORD ARE U LOOKING FOR: ").split()
+while search_text != 'q':
+	findwhat = input("\n\nWHAT LINE ARE U LOOKING FOR: ")
+	search_text = lf.clean_text(findwhat)
+	keywords = search_text.split(' ')
 
-for i in range(len(menu)):
+	# First check potential matches; matches that share at least 
+	# FUZZINESS% of the words with the search (a lot less expensive 
+	# than rote comparison for an exact phrase)
+	potential_matches = []
+	for t,m in meta.items():
+		hits = len(set(keywords).intersection(m['unique']))
+		if hits > int(len(set(keywords)) * FUZZINESS):
+			potential_matches.append((hits,t))
 
-	filenames.append(menu[i].replace('\n',''))
+	# Takes O(n logn) time but increases liklihood of early exact match
+	# found. Also saves time on organizing guesses if exact not found
+	potential_matches.sort() 
 
-for i in range(len(filenames)):
+	# Now check for an exact match out of the potentials
+	exact_found = False
+	for _,t in potential_matches:
+		m = meta[t]
 
-	with open(filenames[i],'r',encoding="utf-8") as file: 
-		
-		for line in file: 
+		if search_text in m['script']:
+			print('"%s" is said in %s\nhttps://youtube.com/%s' % (search_text, m['title'], t))
+			exact_found = True
 
-			for word in line.split():
-				for x in range(len(findwhat)):
+	if not exact_found:
+		if len(potential_matches) == 0:
+			print("Sorry, couldn't find a video where he said anything like that")
+			continue 
 
-					if word.lower() == findwhat[x].lower():
-						printed.append(filenames[i])
-
-for element in set(printed):
-	print(element)
-if len(printed) == 0:
-	print("Nothing found")
-
+		potential_matches = potential_matches[:POTENTIALS]
+		print("I didn't find an exact match, but these are pretty close:")
+	
+		for i in range(len(potential_matches)):
+			m = meta[potential_matches[i][1]]
+			t = potential_matches[i][1]
+			print("[%d]\t%s,  https://youtube.com/%s" % (i, m['title'], t))
