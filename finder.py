@@ -49,17 +49,34 @@ def linesInFile(file, words, predicate):
 	previousLine = ""
 	for line in file:
 		if predicate(line, words):
-			foundLines.append(startTimestampOfLine(previousLine) + " "+ line)
+			foundLines.append("At: " + startTimestampOfLine(previousLine) + " -- "+ line)
 		previousLine = line
 	return foundLines
 
-filenames = findAllSubtitleFiles()
-findwhat = input("WHAT WORD ARE U LOOKING FOR: ").rsplit(" ")
+while True:
+	filenames = findAllSubtitleFiles()
+	findwhat = input("WHAT WORD ARE U LOOKING FOR: ").rsplit(" ")
+	print()
+	print("######################################")
+	print()
 
-for filename in filenames:
-	with open(filename, "r", encoding="utf-8") as file:
-		lines = linesInFile(file, findwhat, strContainsAllWords)
-		if len(lines) > 0:
-			print(filename);
-			for line in lines:
-				print(line)
+
+	for filename in filenames:
+		with open(filename, "r", encoding="utf-8") as file:
+			lines = linesInFile(file, findwhat, strContainsAllWords)
+			if len(lines) > 0:
+				stringCutLength = len(str(Path.cwd())) + 1
+				name = str(filename)[stringCutLength:][:-19]
+				link = str(filename)[stringCutLength:][-18:][:-7]
+				print("Word(s) found in the video: " + name)
+				for line in lines:
+					print(line)
+					line = line[:12].split(":")
+					time = round(int(line[2])*60 + float(line[3]))
+					print("youtube link : https://youtube.com/watch?v=" + link + "&t=" + str(time) + "s")
+					print()
+					print("######################################")
+					print()
+
+
+	print("END OF LIST")
