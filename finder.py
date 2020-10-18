@@ -69,6 +69,7 @@ while True:
 				name = str(filename)[stringCutLength:][:-19]
 				link = str(filename)[stringCutLength:][-18:][:-7]
 				print("Word(s) found in the video: " + name)
+				print()
 				for line in lines:
 					print(line)
 					line = line[:12].split(":")
