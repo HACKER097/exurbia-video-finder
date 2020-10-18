@@ -2,7 +2,7 @@ import os
 import platform
 from pathlib import Path
 import re
-#importing stuff
+#importing stuff 
 
 # returns a string array of the absolute path of all subtitle files in the working directory
 def findAllSubtitleFiles():
@@ -56,10 +56,12 @@ def linesInFile(file, words, predicate):
 filenames = findAllSubtitleFiles()
 findwhat = input("WHAT WORD ARE U LOOKING FOR: ").rsplit(" ")
 
+stringCutLength = len(str(Path.cwd())) + 1 #finds out how much to cut off the output string
+
 for filename in filenames:
 	with open(filename, "r", encoding="utf-8") as file:
 		lines = linesInFile(file, findwhat, strContainsAllWords)
 		if len(lines) > 0:
-			print(filename);
+			print(str(filename)[stringCutLength:])
 			for line in lines:
 				print(line)
