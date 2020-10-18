@@ -38,20 +38,45 @@ def create_new(data_dir='data', outf='metadata.dat', video_info={}):
         url = url.split('.')[0]
         
         script = ''
+        timecodes = []
 
-        with open(fname, 'r') as f:
+        with open(fname, 'r', encoding='utf-8') as f:
             # First 3 lines are metadata and line 4 is blank; last line blank
             text = f.read()
             lines = text.split('\n')[4:-1]
+            
+            tc_ptr = 0
+            
+            # Files are formatted irregularly. Hopefully this fixes it. First line is always time code
+            # Then continues until blank line signifying next time code
+            i = 0
+            while i < len(lines):
+                tc = lines[i]
+                
+                # Iterate through all lines of dialogue
+                i += 1
+                new_lines = ''
+                while lines[i] != '':
+                    new_lines += clean_text(lines[i]) + ' '
+                    i += 1
+                
+                new_chars = len(new_lines)
+                script += new_lines
 
-            # Assumes no line breaks in script lines (formatted time code; script; blank)
-            for i in range(1, len(lines), 3):
-                script += clean_text(lines[i]) + ' '
+                # Save timecodes in CSR-like format (start_word_idx, formatted_tc)
+                tc = tc.split(':')
+                tc = int(tc[1])*60 + int(tc[2].split('.')[0])
+                timecodes.append((tc_ptr, tc))
+                tc_ptr += new_chars
+
+                # Skip last whitespace line delimeter
+                i += 1
+
             
         script = script[:-1] # Trim tailing space
         unique = set(script.split(' ')) # For faster searching 
 
-        video_info[url] = {'title': title, 'script': script, 'unique': unique}
+        video_info[url] = {'title': title, 'script': script, 'unique': unique, 'timecodes': timecodes}
     
     # Saved compressed dict of metadata
     pickle.dump(video_info, open(outf, 'wb'), protocol=pickle.HIGHEST_PROTOCOL)

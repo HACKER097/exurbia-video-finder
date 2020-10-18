@@ -56,7 +56,7 @@ def vid_search(junk, junk2, search_term):
 
     if len(search_result['exact']):
         for u in search_result['exact']:
-            m = meta[u]
+            m = meta[u.split('&')[0]]
             ret.append({'title': m['title'], 'url': urlify(u)})
     
         resp_str = '"%s" is said in:' % search_term

@@ -1,6 +1,6 @@
 import load_files as lf 
 
-FUZZINESS = 0.5 # Toggle percent of words that must match to be returned 
+FUZZINESS = 0.25 # Toggle percent of words that must match to be returned 
 POTENTIALS = 10 # How many non-exact matches to show if search fails
 
 meta = lf.load_db()
@@ -12,7 +12,7 @@ def prompt():
 def display(search_result, meta):
 	if len(search_result['exact']):
 		for t in search_result['exact']:
-			m = meta[t]
+			m = meta[t.split('&')[0]]
 			print('"%s" is said in %s\nhttps://youtube.com/%s' % (search_text, m['title'], t))
 
 		return 
@@ -50,11 +50,19 @@ def search(search_text):
 
 	# Now check for an exact match out of the potentials
 	exact_found = False
-	for _,t in potential_matches:
-		m = meta[t]
+	for _,u in potential_matches:
+		m = meta[u]
 
-		if search_text in m['script']:
-			ret['exact'].append(t)
+		idx = m['script'].find(search_text)
+		if idx >= 0:
+			# Find matching timecode
+			for tc_dat in m['timecodes']:
+				if tc_dat[0] > idx:
+					break 
+
+				tc = tc_dat[1]
+
+			ret['exact'].append('%s&t=%ss' % (u,tc))
 			exact_found = True
 
 	if not exact_found:
