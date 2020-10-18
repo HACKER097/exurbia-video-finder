@@ -75,7 +75,6 @@ while True:
 					line = line[:12].split(":")
 					try:
 						time = round(int(line[2])*60 + float(line[3]))
-						print()
 						print("youtube link : https://youtube.com/watch?v=" + link + "&t=" + str(time) + "s")
 					except IndexError:
 						print("***WORKING ON A FIX FOR LINK***")
