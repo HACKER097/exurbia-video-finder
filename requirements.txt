@@ -1,37 +1,24 @@
-# This file may be used to create an environment using:
-# $ conda create --name <env> --file <this file>
-# platform: win-64
-brotli-python=1.0.9=py36h33355b6_2
-certifi=2020.6.20=py36_0
-click=7.1.2=pyh9f0ad1d_0
-dash=1.16.3=pyh9f0ad1d_0
-dash-core-components=1.12.1=pyh9f0ad1d_0
-dash-html-components=1.1.1=pyh9f0ad1d_0
-dash-renderer=1.8.2=pyh9f0ad1d_0
-dash-table=4.10.1=pyh9f0ad1d_0
-flask=1.1.2=pyh9f0ad1d_0
-flask-compress=1.7.0=pyh9f0ad1d_0
-future=0.18.2=py36h9f0ad1d_2
-itsdangerous=1.1.0=py_0
-jinja2=2.11.2=pyh9f0ad1d_0
-joblib=0.17.0=py_0
-markupsafe=1.1.1=py36hc753bc4_2
-nltk=3.5=py_0
-pip=20.2.3=py36_0
-plotly=4.11.0=pyh9f0ad1d_0
-python=3.6.12=h5500b2f_2
-python_abi=3.6=1_cp36m
-pyyaml=5.3.1=py36hc753bc4_1
-regex=2020.10.15=py36he774522_0
-retrying=1.3.3=py_2
-setuptools=50.3.0=py36h9490d1a_1
-six=1.15.0=pyh9f0ad1d_0
-sqlite=3.33.0=h2a8f88b_0
-tqdm=4.50.2=py_0
-vc=14.1=h0510ff6_4
-vs2015_runtime=14.16.27012=hf0eaf9b_3
-werkzeug=1.0.1=pyh9f0ad1d_0
-wheel=0.35.1=py_0
-wincertstore=0.2=py36h7fe50ca_0
-yaml=0.2.5=he774522_0
-zlib=1.2.11=h62dcd97_4
+Brotli @ file:///D:/bld/brotli-split_1602260127470/work
+certifi==2020.6.20
+click==7.1.2
+dash @ file:///home/conda/feedstock_root/build_artifacts/dash_1602531952329/work
+dash-core-components @ file:///home/conda/feedstock_root/build_artifacts/dash-core-components_1600319259726/work
+dash-html-components @ file:///home/conda/feedstock_root/build_artifacts/dash-html-components_1599715712112/work
+dash-renderer @ file:///home/conda/feedstock_root/build_artifacts/dash-renderer_1601046708302/work
+dash-table @ file:///home/conda/feedstock_root/build_artifacts/dash-table_1599810523485/work
+Flask==1.1.2
+Flask-Compress @ file:///home/conda/feedstock_root/build_artifacts/flask-compress_1602267119698/work
+future @ file:///D:/bld/future_1602538622201/work
+itsdangerous==1.1.0
+Jinja2==2.11.2
+joblib @ file:///tmp/build/80754af9/joblib_1601912903842/work
+MarkupSafe @ file:///D:/bld/markupsafe_1602267688190/work
+nltk @ file:///tmp/build/80754af9/nltk_1592496090529/work
+plotly @ file:///home/conda/feedstock_root/build_artifacts/plotly_1601563174572/work
+PyYAML==5.3.1
+regex @ file:///C:/ci/regex_1602770568056/work
+retrying==1.3.3
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1590081179328/work
+tqdm @ file:///tmp/build/80754af9/tqdm_1602185206534/work
+Werkzeug==1.0.1
+wincertstore==0.2
