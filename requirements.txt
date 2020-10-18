@@ -7,3 +7,4 @@ Flask==1.1.2
 Flask-Compress==1.7.0
 nltk==3.4
 Werkzeug==0.15.2
+gunicorn>=19.1.0
