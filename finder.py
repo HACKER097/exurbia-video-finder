@@ -1,43 +1,65 @@
 import os
 import platform
+from pathlib import Path
+import re
 #importing stuff
 
-platform = platform.system()
-#identifying the OS 
+# returns a string array of the absolute path of all subtitle files in the working directory
+def findAllSubtitleFiles():
+	subtitleFiles = []
+	workingDirectory = Path('.')
+	for childDir in workingDirectory.iterdir():
+		if childDir.name.endswith('.vtt'):
+			subtitleFiles.append(childDir.absolute())
+	return subtitleFiles
 
-if platform == "Linux":
-	os.system('ls >> names.txt')
-elif platform == "Windows":
-	os.system('dir /b *.vtt > names.txt')
-elif platform == "Darwin":
-	os.system('ls >> names.txt')
-#Putting filenames in a text file for each OS
+#grabs the start timestamp of a line
+def startTimestampOfLine(line):
+	pattern = re.compile("^\d\d:\d\d:\d\d.\d\d\d")
+	result = re.search(pattern, line)
+	try:
+		return result.group(0)
+	except AttributeError:
+		return line
 
-names = open("names.txt", 'r+')
-menu = names.readlines(1000000)
-names.truncate(0)
-filenames = []
-printed = []
-findwhat = input("WHAT WORD ARE U LOOKING FOR: ").split()
+# does a given string contain all the words?
+def strContainsAllWords(str, words):
+	wordCount = 0
+	for s in str.rsplit(" "):
+		for word in words:
+			if s.lower() == word:
+				wordCount = wordCount + 1
+	return wordCount == len(words)
 
-for i in range(len(menu)):
+# does a given string contain some of the words?
+def strContainsAnyWord(str, words):
+	for s in str.rsplit(" "):
+		for word in words:
+			if s == word:
+				return True
+	return False
 
-	filenames.append(menu[i].replace('\n',''))
+#returns an array of lines in the given file if the predicate is true
+#predicate parameters are (String, String[])
+# String being the line that the predicate is checking
+# String[] is the list of words that we want to compare
+def linesInFile(file, words, predicate):
+	foundLines = []
+	file = open(filename, "r", encoding="utf-8")
+	previousLine = ""
+	for line in file:
+		if predicate(line, words):
+			foundLines.append(startTimestampOfLine(previousLine) + " "+ line)
+		previousLine = line
+	return foundLines
 
-for i in range(len(filenames)):
+filenames = findAllSubtitleFiles()
+findwhat = input("WHAT WORD ARE U LOOKING FOR: ").rsplit(" ")
 
-	with open(filenames[i],'r',encoding="utf-8") as file: 
-		
-		for line in file: 
-
-			for word in line.split():
-				for x in range(len(findwhat)):
-
-					if word.lower() == findwhat[x].lower():
-						printed.append(filenames[i])
-
-for element in set(printed):
-	print(element)
-if len(printed) == 0:
-	print("Nothing found")
-
+for filename in filenames:
+	with open(filename, "r", encoding="utf-8") as file:
+		lines = linesInFile(file, findwhat, strContainsAllWords)
+		if len(lines) > 0:
+			print(filename);
+			for line in lines:
+				print(line)
