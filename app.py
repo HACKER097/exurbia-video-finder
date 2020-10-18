@@ -12,6 +12,7 @@ from load_files import clean_text
 app = dash.Dash(
 	__name__
 )
+server = app.server 
 
 app.title = 'What video did he say that in?'
 app.layout = html.Div([
@@ -73,8 +74,6 @@ def vid_search(junk, search_term):
         resp_str = "Sorry, couldn't find a video where he said anything like that"
     
     return ret, resp_str
-
-server = app.server 
 
 ######## START EVERYTHING ########    
 if __name__ == '__main__':
