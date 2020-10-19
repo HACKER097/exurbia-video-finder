@@ -32,7 +32,7 @@ def create_new(data_dir='data', outf='metadata.dat', video_info={}):
     for fname in os.listdir(data_dir):
         # Assumes files are formatted NAME-yt url
         title = fname.split('-')[0]
-        url = '-'.join(fname.split('-')[1:])[1:]
+        url = '-'.join(fname.split('-')[1:])
         fname = os.path.join(data_dir, fname)
 
         # Trim file extention from file name
