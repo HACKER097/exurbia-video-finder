@@ -31,7 +31,8 @@ with just those files
 def create_new(data_dir='data', outf='metadata.dat', video_info={}):
     for fname in os.listdir(data_dir):
         # Assumes files are formatted NAME-yt url
-        title, url = fname.split('-')[0:2]
+        title = fname.split('-')[0]
+        url = '-'.join(fname.split('-')[1:])[1:]
         fname = os.path.join(data_dir, fname)
 
         # Trim file extention from file name
