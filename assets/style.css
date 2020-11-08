@@ -5,7 +5,10 @@ body {
     font-family: "Helvetica", "sans-serif";
 }
 
-#search { text-align : center; font-size: 25px}
+#search { 
+    text-align : center; 
+    font-size: 25px
+}
 
 a {
     color: white;

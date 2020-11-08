@@ -9,6 +9,7 @@ from finder import meta, search
 from load_files import clean_text
 
 RET_WIDTH = '75%'
+OVERHANG = '25px'
 
 app = dash.Dash(
 	__name__
@@ -33,7 +34,7 @@ app.layout = html.Div([
         html.P('In which video did Exurb1a say'),
         dcc.Input(id='searchbar', 
             type='text', 
-            value='wizard jizz', 
+            value='', 
             debounce=True,
             style={
                 'background-color': 'rgba(0,0,0,0)',
@@ -51,11 +52,12 @@ app.layout = html.Div([
         id='search'
     ),
     html.Div([
-        html.Div('', id='results')
+        html.Div('', id='results', style={'font-size': '20px'})
     ],
         style={
             'width': RET_WIDTH,
-            'margin': 'auto'
+            'margin-left': 'calc(25% / 2)',
+            'text-align': 'center'
         }
     ),
     html.Div([
@@ -83,7 +85,9 @@ def urlify_markup(s):
 
 def urlify_dash(text, href):
     url = 'https://www.youtube.com/watch?v=' + href
-    return html.P(html.A(text, href=url, target='_blank'))
+    return html.P(
+        html.A(text, href=url, target='_blank')
+    )
 
 def embed_youtube(text, href):
     eref = href.replace('&t', '?start')[:-1] # change for embedded URL format
@@ -94,14 +98,35 @@ def embed_youtube(text, href):
         height=315,
         style={
             'frameborder':0,
-            'width':'min(100%, 560)',
+            'width':'min(75%, 560)',
             'height':'calc(var(width) * 0.5625)', # Correct aspect ratio for determined width
             'allow':"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
-            'margin': 'auto auto auto 10'
+            'margin-left': OVERHANG,
+            'margin-right': OVERHANG
         }
     )
 
-    return [urlify_dash(text, href), iframe]
+    line = html.Div(
+        style={
+            'height': '1px',
+            'width': '100%',
+            'background-color': 'white',
+            'display': 'inline-block',
+            'margin-bottom': '25px',
+            'margin-top': '20px'
+        }
+    )
+
+    vid_and_title = html.Div(
+        [urlify_dash(text, href), iframe],
+        style={
+            'display': 'inline-block',
+            'margin': '0 auto',
+            'text-align': 'left'
+        }
+    )
+
+    return [vid_and_title, line]
 
 ### CALLBACKS ###
 @app.callback(
@@ -140,12 +165,12 @@ def vid_search(search_term):
     else:
         resp_str = "Sorry, couldn't find a video where he said anything like that"
     
-    return ret, resp_str
+    return ret[:-1], resp_str
 
 ######## START EVERYTHING ########    
 if __name__ == '__main__':
 	# Production mode
-    #app.run_server()
+    app.run_server()
 
     # Debug mode
-    app.run_server(debug=True, dev_tools_hot_reload=True)
+    #app.run_server(debug=True, dev_tools_hot_reload=True)

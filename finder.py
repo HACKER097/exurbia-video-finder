@@ -1,6 +1,6 @@
 import load_files as lf 
 
-FUZZINESS = 0.25 # Toggle percent of words that must match to be returned 
+FUZZINESS = 0.5 # Toggle percent of words that must match to be returned 
 POTENTIALS = 10 # How many non-exact matches to show if search fails
 
 meta = lf.load_db()
