@@ -44,7 +44,7 @@ def search(search_text):
 	potential_matches = []
 	for t,m in meta.items():
 		hits = len(set(keywords).intersection(m['unique']))
-		if hits > int(len(set(keywords)) * FUZZINESS):
+		if hits >= int(len(set(keywords)) * FUZZINESS):
 			potential_matches.append((hits,t))
 
 	# Takes O(n logn) time but increases liklihood of early exact match
