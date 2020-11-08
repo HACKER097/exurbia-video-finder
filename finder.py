@@ -35,6 +35,9 @@ def search(search_text):
 	keywords = search_text.split(' ')
 	ret = {'exact': [], 'potential': []} 
 
+	if search_text == '':
+		return ret 
+
 	# First check potential matches; matches that share at least 
 	# FUZZINESS% of the words with the search (a lot less expensive 
 	# than rote comparison for an exact phrase)
