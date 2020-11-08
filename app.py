@@ -91,6 +91,12 @@ def urlify_dash(text, href):
         html.A(text, href=url, target='_blank')
     )
 
+def urlify_dash_no_td(text,href):
+    url = 'https://www.youtube.com/watch?v=' + href
+    return html.P(
+        html.A(text, href=url, target='_blank', style={'text-decoration': 'none'})
+    )
+
 def embed_youtube(text, href):
     eref = href.replace('&t', '?start')[:-1] # change for embedded URL format
     url = 'https://www.youtube.com/embed/' + eref
@@ -119,8 +125,19 @@ def embed_youtube(text, href):
         }
     )
 
+    ex_text = html.P(
+        [urlify_dash_no_td(
+            'https://www.youtube.com/watch?v=' + href, 
+            href
+        )],
+        style={
+            'font-size': '10px',
+            'font-family': '"Courier new", "monospace"'
+        }
+    )
+
     vid_and_title = html.Div(
-        [urlify_dash(text, href), iframe],
+        [urlify_dash(text, href), iframe, ex_text],
         style={
             'display': 'inline-block',
             'margin': '0 auto',
