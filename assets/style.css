@@ -1,0 +1,19 @@
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('space_bg.jpg');
+    background-position: center top;
+    color: white;
+    font-family: "Helvetica", "sans-serif";
+}
+
+#search { 
+    text-align : center; 
+    font-size: 25px
+}
+
+a {
+    color: white;
+}
+
+a:active {
+    color: grey;
+}

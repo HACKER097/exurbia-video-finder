@@ -1,6 +1,6 @@
 import load_files as lf 
 
-FUZZINESS = 0.25 # Toggle percent of words that must match to be returned 
+FUZZINESS = 0.5 # Toggle percent of words that must match to be returned 
 POTENTIALS = 10 # How many non-exact matches to show if search fails
 
 meta = lf.load_db()
@@ -34,6 +34,9 @@ def display(search_result, meta):
 def search(search_text):
 	keywords = search_text.split(' ')
 	ret = {'exact': [], 'potential': []} 
+
+	if search_text == '':
+		return ret 
 
 	# First check potential matches; matches that share at least 
 	# FUZZINESS% of the words with the search (a lot less expensive 
