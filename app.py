@@ -28,7 +28,8 @@ app.layout = html.Div([
                 'top': '5px'
             }
         )],
-        href='https://www.youtube.com/user/willunicycleforfood'
+        href='https://www.youtube.com/user/willunicycleforfood',
+        target='_blank'
     ),
     html.Div([
         html.P('In which video did Exurb1a say'),
@@ -66,7 +67,8 @@ app.layout = html.Div([
                 src=app.get_asset_url('github-icon.png'),
                 style={'width': '100%', 'height': '100%'}
             )],
-            href='https://github.com/zazyzaya/exurbia-video-finder'
+            href='https://github.com/zazyzaya/exurbia-video-finder',
+            target='_blank'
         )],
         id='footer',
         style={
