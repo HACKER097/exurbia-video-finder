@@ -32,7 +32,7 @@ app.layout = html.Div([
         target='_blank'
     ),
     html.Div([
-        html.P('In which video did Exurb1a say'),
+        html.P('In which video did Exurb1a say (Down for maintenence (sorry!))'),
         dcc.Input(id='searchbar', 
             type='text', 
             value='', 
