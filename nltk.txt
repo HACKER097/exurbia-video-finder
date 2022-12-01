@@ -1,3 +1,4 @@
 wordnet
 punkt
 stopwords
+omw-1.4

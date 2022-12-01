@@ -1,7 +1,7 @@
 import dash 
-import dash_table
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dash_table
+from dash import dcc
+from dash import html
 
 from dash.exceptions import PreventUpdate
 from dash.dependencies import Output, Input, State
@@ -32,7 +32,7 @@ app.layout = html.Div([
         target='_blank'
     ),
     html.Div([
-        html.P('In which video did Exurb1a say (Down for maintenence (sorry!))'),
+        html.P('In which video did Exurb1a say'),
         dcc.Input(id='searchbar', 
             type='text', 
             value='', 
