@@ -29,7 +29,10 @@ Iterates through everything in /data and builds a data structure
 with just those files
 '''
 def create_new(data_dir='data', outf='metadata.dat', video_info={}):
-    for fname in os.listdir(data_dir):
+    # Don't put in requirements.txt this should NEVER run on the server
+    from tqdm import tqdm 
+    
+    for fname in tqdm(os.listdir(data_dir)):
         # Assumes files are formatted NAME-yt url
         title = fname.split('-')[0]
         url = '-'.join(fname.split('-')[1:])
