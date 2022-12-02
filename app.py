@@ -98,7 +98,11 @@ def urlify_dash_no_td(text,href):
     )
 
 def embed_youtube(text, href):
-    eref = href.replace('&t', '?start')[:-1] # change for embedded URL format
+    if '&' in href:
+        eref = href.replace('&t', '?start')[:-1] # change for embedded URL format
+    else:
+        eref = href
+
     url = 'https://www.youtube.com/embed/' + eref
     iframe = html.Iframe(
         src=url,
