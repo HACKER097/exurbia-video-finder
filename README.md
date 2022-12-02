@@ -6,6 +6,6 @@ Thanks to Reddit users /u/hacker_097 for the original idea and /u/arischs for th
 
 Built by /u/TheWittyScreenName
 
-### Depreciation notice
+New videos captioned using https://savesubs.com/ 
 
-Heroku disabled free accounts. It looks like the site is still running, but I'm not sure how much longer it will remain up. I'm looking into alternative hosting.
+Make sure to add 2 newlines at the beginning, and 2 at the end for compatibility with original VTT parser (I'm too ~~lazy~~ busy to update the parser)
